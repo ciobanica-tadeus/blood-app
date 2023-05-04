@@ -1,0 +1,15 @@
+.prettybutton {
+  background-color: #800000; /* Set your desired background color */
+  color: white; /* Set your desired text color */
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 28%;
+}
+
+.div {
+  padding: 10px;
+}
+
