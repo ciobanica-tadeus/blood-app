@@ -45,12 +45,30 @@ public class DataBaseInitializer {
                 "Alba"
         );
         doctorRepository.save(doctor1);
+        Doctor doctor2 = new Doctor(
+                "docto",
+                "doctor123",
+                "Pavaluc",
+                "Ion",
+                "567899009888",
+                "Hunedoara"
+        );
+        doctorRepository.save(doctor2);
+        Doctor doctor3 = new Doctor(
+                "healthy@yahoo.com",
+                "suntbinemersi",
+                "Sergheievici",
+                "Alexandru",
+                "567899009888",
+                "Cluj-Napoca"
+        );
+        doctorRepository.save(doctor3);
         Donor donor1 = new Donor(
                 "donor@gmail.com",
                 "donor",
                 "Costea",
                 "Gabriel",
-                "Bucuresti"
+                "Cluj"
         );
         donorRepository.save(donor1);
 

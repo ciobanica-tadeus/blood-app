@@ -1,5 +1,6 @@
 package com.example.bloodapp.services;
 
+import com.example.bloodapp.controllers.dtos.DeleteDonorResponse;
 import com.example.bloodapp.exceptions.DuplicateEntityException;
 import com.example.bloodapp.controllers.dtos.DonorResponse;
 import com.example.bloodapp.domain.entity.Donor;
@@ -47,13 +48,23 @@ public class DonorService {
         return new DonorResponse(donor);
     }
 
-    public Long deleteDonor(Long id) {
+    public DeleteDonorResponse deleteDonor(Long id) {
         Optional<Donor> donors = donorRepository.findById(id);
         if(donors.isEmpty()){
             throw new NotFoundException("Donor with inserted id not found!");
         }
         Donor donor = donors.get();
         donorRepository.delete(donor);
-        return donor.getId();
+        return new DeleteDonorResponse(donor.getId());
+    }
+
+    public DonorResponse findByID(Long id) {
+        Optional<Donor> donors = donorRepository.findById(id);
+        if(donors.isEmpty()){
+            throw new NotFoundException("Donor with inserted id not found!");
+        }
+        Donor donor = donors.get();
+
+        return new DonorResponse(donor);
     }
 }

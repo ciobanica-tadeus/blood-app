@@ -2,12 +2,16 @@ package com.example.bloodapp.controllers;
 
 import com.example.bloodapp.controllers.dtos.BaseResponse;
 import com.example.bloodapp.controllers.dtos.DoctorResponse;
+import com.example.bloodapp.controllers.dtos.ErrorResponse;
 import com.example.bloodapp.exceptions.DuplicateEntityException;
+import com.example.bloodapp.exceptions.NotFoundException;
 import com.example.bloodapp.services.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.prefs.NodeChangeEvent;
 
 @CrossOrigin
 @RestController
@@ -55,6 +59,15 @@ public class DoctorController {
             return new ResponseEntity<>(doctorService.deleteDoctor(id), HttpStatus.OK);
         } catch (DuplicateEntityException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping(value = "/get_all")
+    public ResponseEntity<BaseResponse> getAllDoctors(){
+        try{
+            return new ResponseEntity<>(doctorService.getAll(), HttpStatus.OK);
+        }catch (NotFoundException e){
+            return new ResponseEntity<>(new ErrorResponse(e.getMessage()),HttpStatus.BAD_REQUEST);
         }
     }
 }

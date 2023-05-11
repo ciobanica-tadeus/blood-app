@@ -32,13 +32,28 @@ function Login() {
         response.json().then((body) => {
           const role = body.role;
           console.log(role);
+          console.log("In login function id: " + body.id);
+
           if (role === "ADMIN") {
-            navigate("/admin");
+            navigate("/admin",{
+              state: {
+                adminId : body.id
+              }
+            });
           } else if (role === "DOCTOR") {
-            navigate("/doctor");
+            navigate("/doctor",{
+              state: {
+                doctorId : body.id
+              }
+            });
           } else if (role === "DONOR") {
-            navigate("/donor");
+            navigate("/donor",{
+              state: {
+                donorId : body.id
+              }
+            });
           }
+        
         });
       }
      
@@ -59,7 +74,7 @@ function Login() {
         <label className={classes.label}>Password</label>
         <input className={classes.input} ref={passwordRef} type="password" />
       </div>
-      <button className={classes.button} onClick={login}>Login</button>
+      <button className={classes.button} onClick={login} >Login</button>
     </div>
   );
 }
