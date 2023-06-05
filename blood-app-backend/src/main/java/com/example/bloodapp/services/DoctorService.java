@@ -40,6 +40,7 @@ public class DoctorService {
             throw new NotFoundException("Doctor not found!");
         }
         Doctor doctor = doctors.get();
+        System.out.println(doctor.getLocationDoctor().getName());
         return new DoctorResponse(doctor);
     }
 

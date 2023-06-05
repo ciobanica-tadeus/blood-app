@@ -1,9 +1,11 @@
 import { useState } from "react";
 import components from "../../components/Components.module.css";
 import classes from "./Donor.module.css";
+import CardLocation from "../../components/CardLocation";
 
 function ViewAllLocations(props) {
   const [locations, setLocations] = useState([]);
+
   function getLocations() {
     const id = props.id;
     const url = "http://localhost:8080/donor/get_all_locations/" + id;
@@ -16,28 +18,9 @@ function ViewAllLocations(props) {
       });
     });
   }
+
   return (
     <div className={components.modal}>
-      <table>
-        <thead>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Address</th>
-          <th>Hour Program</th>
-          <th>Day Program</th>
-        </thead>
-        <tbody>
-          {locations.map((item, index) => (
-            <tr key={index}>
-              <td>{item.id}</td>
-              <td>{item.name}</td>
-              <td>{item.address}</td>
-              <td>{item.startHour + " - " + item.endHour}</td>
-              <td>{item.startDay + " - " + item.endDay}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
       <div className={classes.div}>
         <button className={classes.prettybutton} onClick={props.onCancel}>
           {" "}
@@ -46,6 +29,21 @@ function ViewAllLocations(props) {
         <button className={classes.prettybutton} onClick={getLocations}>
           See locations
         </button>
+      </div>
+      <div className={classes.div} />
+
+      <div className={classes.div}>
+        {locations.map((item, index) => (
+          <CardLocation
+            key={index}
+            locationId={item.id}
+            text={item.name}
+            address={item.address}
+            program={item.startDay + " - " + item.endDay}
+            hours={item.startHour + " - " + item.endHour}
+            donorId={props.id}
+          />
+        ))}
       </div>
     </div>
   );

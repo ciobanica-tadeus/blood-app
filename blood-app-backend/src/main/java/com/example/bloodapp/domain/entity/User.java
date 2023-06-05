@@ -14,6 +14,8 @@ public class User extends BaseEntity{
     @Column
     private String password;
     @Column
+    private String phoneNumber;
+    @Column
     private Role role;
 
     public User(){
@@ -31,6 +33,14 @@ public class User extends BaseEntity{
         this.password = userResponse.getPassword();
         setId(userResponse.getId());
         setRole(userResponse.getRole());
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {

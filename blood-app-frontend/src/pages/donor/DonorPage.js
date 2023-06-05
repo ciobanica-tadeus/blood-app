@@ -6,12 +6,16 @@ import Backdrop from "../../components/Backdrop";
 import { useLocation } from "react-router-dom";
 import DeleteDonor from "./DeleteDonor";
 import ViewAllLocations from "./ViewAllLocations";
+import AppointmentsList from "./AppointmentList";
+import DeleteAppointment from "./DeleteAppointment";
 
 function DonorPage() {
   const location = useLocation();
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [viewLocationsModal, setViewLocationModal] = useState(false);
+  const [viewAppointmentsModal, setViewAppointmentsModal] = useState(false);
+  const [deleteAppointment, setDeleteAppointment] = useState(false);
 
   function renderEditModal() {
     setEditModal(true);
@@ -36,6 +40,20 @@ function DonorPage() {
   function closeViewLocationsModal() {
     setViewLocationModal(false);
   }
+  function renderViewAppointmentsModal() {
+    setViewAppointmentsModal(true);
+  }
+
+  function closeViewAppointmentsModal() {
+    setViewAppointmentsModal(false);
+  }
+  function renderDeleteAppointment() {
+    setDeleteAppointment(true);
+  }
+
+  function closeDeleteAppointment() {
+    setDeleteAppointment(false);
+  }
 
   return (
     <div>
@@ -54,6 +72,18 @@ function DonorPage() {
           text="View my locations"
         />
       </div>
+      <div>
+        <CardButton
+          onClick={renderViewAppointmentsModal}
+          text="View my appointments"
+        />
+      </div>
+      <div>
+        <CardButton
+          onClick={renderDeleteAppointment}
+          text="Delete an appointment"
+        />
+      </div>
       {editModal && (
         <EditDonor onCancel={closeEditModal} id={location.state.donorId} />
       )}
@@ -69,6 +99,19 @@ function DonorPage() {
         />
       )}
       {viewLocationsModal && <Backdrop onCancel={closeViewLocationsModal} />}
+      {viewAppointmentsModal && (
+        <AppointmentsList
+          onCancel={closeViewAppointmentsModal}
+          id={location.state.donorId}
+        />
+      )}
+      {viewAppointmentsModal && (
+        <Backdrop onCancel={closeViewAppointmentsModal} />
+      )}
+      {deleteAppointment && (
+        <DeleteAppointment onCancel={closeDeleteAppointment} />
+      )}
+      {deleteAppointment && <Backdrop onCancel={closeDeleteAppointment} />}
     </div>
   );
 }

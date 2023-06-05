@@ -118,7 +118,7 @@ function EditDonor(props) {
           id="textCounty"
         />
       </div>
-      <div>
+      <div className={classes.div}>
         <button className={classes.prettybutton} onClick={props.onCancel}>
           Cancel
         </button>

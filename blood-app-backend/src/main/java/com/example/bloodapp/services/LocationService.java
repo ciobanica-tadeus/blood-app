@@ -2,6 +2,7 @@ package com.example.bloodapp.services;
 
 import com.example.bloodapp.controllers.dtos.ListLocationResponse;
 import com.example.bloodapp.controllers.dtos.LocationResponse;
+import com.example.bloodapp.controllers.dtos.RatingResponse;
 import com.example.bloodapp.domain.entity.Donor;
 import com.example.bloodapp.domain.entity.Location;
 import com.example.bloodapp.domain.repositories.DonorRepository;
@@ -41,5 +42,37 @@ public class LocationService {
 
         }
         return new ListLocationResponse(locationResponses);
+    }
+
+
+    public RatingResponse setNewRatingValue(RatingResponse ratingResponse) {
+        if(ratingResponse.getRatingValue() > 10 && ratingResponse.getRatingValue() < 0){
+            throw new NotFoundException("Insert values beetween 0-10!!");
+        }
+        Optional<Location> optionalLocation = locationRepository.findById(ratingResponse.getLocationId());
+        if(optionalLocation.isEmpty()){
+            throw new NotFoundException("Location with inserted id not found!!");
+        }
+        Location location = optionalLocation.get();
+        location.addRating(ratingResponse.getRatingValue());
+        List<Integer> ratings = location.getRatings();
+        Integer sum = 0;
+        for (Integer rating : ratings) {
+            sum += rating;
+        }
+        Float averageValue = (float) (sum / ratings.size());
+        location.setRatings(ratings);
+        location.setAverageRating(averageValue);
+        locationRepository.save(location);
+        return new RatingResponse(averageValue);
+    }
+
+    public RatingResponse getRating(Long id) {
+        Optional<Location> locations = locationRepository.findById(id);
+        if(locations.isEmpty()){
+            throw new NotFoundException("Location with inserted id not found!!");
+        }
+        Location location = locations.get();
+        return new RatingResponse(location.getAverageRating());
     }
 }

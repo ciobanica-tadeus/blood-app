@@ -29,7 +29,7 @@ function ViewAllDoctors() {
         </thead>
         <tbody>
           {doctors.map((item, index) => (
-            <tr key = {index}>
+            <tr key={index}>
               <td>{item.id}</td>
               <td>{item.email}</td>
               <td>{item.name + " " + item.surname}</td>
@@ -45,7 +45,6 @@ function ViewAllDoctors() {
         </button>
       </div>
     </div>
-
   );
 }
 

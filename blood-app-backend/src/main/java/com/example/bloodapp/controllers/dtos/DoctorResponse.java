@@ -1,8 +1,7 @@
 package com.example.bloodapp.controllers.dtos;
 
-import com.example.bloodapp.domain.entity.BaseEntity;
 import com.example.bloodapp.domain.entity.Doctor;
-import jakarta.persistence.Column;
+import com.example.bloodapp.domain.entity.Location;
 
 public class DoctorResponse extends BaseResponse {
     private Long id;
@@ -12,6 +11,7 @@ public class DoctorResponse extends BaseResponse {
     private String surname;
     private String cnp;
     private String county;
+    private Location location;
 
     public DoctorResponse(){
 
@@ -25,6 +25,7 @@ public class DoctorResponse extends BaseResponse {
         this.surname = doctor.getSurname();
         this.cnp = doctor.getCnp();
         this.county = doctor.getCounty();
+        this.location = doctor.getLocationDoctor();
     }
 
     public String getEmail() {
@@ -81,5 +82,13 @@ public class DoctorResponse extends BaseResponse {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }
