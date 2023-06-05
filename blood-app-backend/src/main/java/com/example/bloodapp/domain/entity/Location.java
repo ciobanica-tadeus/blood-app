@@ -1,7 +1,6 @@
 package com.example.bloodapp.domain.entity;
 
 import jakarta.persistence.*;
-import org.springframework.cglib.core.Local;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -27,8 +26,13 @@ public class Location extends BaseEntity {
     private Integer availableNumberOfPeople;
     @Column
     private String county;
-    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Appointment> appointments = new ArrayList<>();
+    @OneToMany
+    private List<Appointment> appointments;
+    @Column
+    private List<Integer> ratings = new ArrayList<>();
+    @Column
+    private Float averageRating;
+
 
     public Location() {
 
@@ -43,6 +47,23 @@ public class Location extends BaseEntity {
         this.endDay = endDay;
         this.availableNumberOfPeople = availableNumberOfPeople;
         this.county = county;
+        this.averageRating = 0f;
+    }
+
+    public List<Integer> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Integer> ratings) {
+        this.ratings = ratings;
+    }
+
+    public Float getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(Float averageRating) {
+        this.averageRating = averageRating;
     }
 
     public String getName() {
@@ -115,5 +136,8 @@ public class Location extends BaseEntity {
 
     public void setAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
+    }
+    public void addRating(Integer value){
+        this.ratings.add(value);
     }
 }

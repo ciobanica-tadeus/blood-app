@@ -1,6 +1,7 @@
 package com.example.bloodapp.services;
 
 import com.example.bloodapp.controllers.dtos.DoctorResponse;
+import com.example.bloodapp.controllers.dtos.ListDoctorResponse;
 import com.example.bloodapp.domain.entity.Doctor;
 import com.example.bloodapp.domain.repositories.DoctorRepository;
 import com.example.bloodapp.exceptions.DuplicateEntityException;
@@ -8,6 +9,8 @@ import com.example.bloodapp.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,6 +40,7 @@ public class DoctorService {
             throw new NotFoundException("Doctor not found!");
         }
         Doctor doctor = doctors.get();
+        System.out.println(doctor.getLocationDoctor().getName());
         return new DoctorResponse(doctor);
     }
 
@@ -64,5 +68,19 @@ public class DoctorService {
         Doctor doctor = doctors.get();
         doctorRepository.delete(doctor);
         return doctor.getId();
+    }
+
+    public ListDoctorResponse getAll() {
+        List<Doctor> doctors = doctorRepository.findAll();
+        if (doctors.isEmpty()) {
+            throw new NotFoundException("Doctors not found!");
+        }
+        List<DoctorResponse> doctorResponses = new ArrayList<>();
+
+        for (Doctor doctor : doctors) {
+            DoctorResponse doctorRes = new DoctorResponse(doctor);
+            doctorResponses.add(doctorRes);
+        }
+        return new ListDoctorResponse(doctorResponses);
     }
 }

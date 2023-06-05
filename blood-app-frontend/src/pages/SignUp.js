@@ -9,6 +9,7 @@ function SignUp() {
   const nameRef = useRef();
   const surnameRef = useRef();
   const countyRef = useRef();
+  const cnpRef = useRef();
 
   function signupFunction() {
     const email = emailRef.current.value;
@@ -16,29 +17,38 @@ function SignUp() {
     const name = nameRef.current.value;
     const surname = surnameRef.current.value;
     const county = countyRef.current.value;
+    const cnp = cnpRef.current.value;
 
     const bodyRequest = {
       email: email,
       password: password,
       name: name,
       surname: surname,
+      cnp: cnp,
       county: county,
     };
 
-    if(email === "" || password === "" || name === "" || surname === "" || county === ""){
-        alert("Complete the fields to complete the registration!");
-    }else{
-        fetch("http://localhost:8080/donor/register", {
-      method: "POST",
-      body: JSON.stringify(bodyRequest),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((response) => {
-      response.json().then((body) => {
-        console.log(body);
+    if (
+      email === "" ||
+      password === "" ||
+      name === "" ||
+      surname === "" ||
+      cnp === "" ||
+      county === ""
+    ) {
+      alert("Complete the fields to complete the registration!");
+    } else {
+      fetch("http://localhost:8080/donor/register", {
+        method: "POST",
+        body: JSON.stringify(bodyRequest),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
+        response.json().then((body) => {
+          console.log(body);
+        });
       });
-    });
     }
   }
 
@@ -63,6 +73,10 @@ function SignUp() {
       <div className={signUpClasses.div}>
         <label className={signUpClasses.label}> Surname</label>
         <input className={signUpClasses.input} ref={surnameRef} type="text" />
+      </div>
+      <div className={signUpClasses.div}>
+        <label className={signUpClasses.label}> CNP</label>
+        <input className={signUpClasses.input} ref={cnpRef} type="text" />
       </div>
       <div className={signUpClasses.div}>
         <label className={signUpClasses.label}> County</label>

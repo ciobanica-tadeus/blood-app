@@ -9,15 +9,36 @@ import java.time.LocalTime;
 @Table(name = "appointments")
 public class Appointment extends BaseEntity {
     @Column
-    private LocalTime appointmentTime;
-    @Column
     private LocalDate appoinmentDate;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "location_id")
     private Location location;
+    @ManyToOne
+    @JoinColumn(name = "donor_id")
+    private Donor donor;
+    @Column
+    private Boolean confirmed;
+    @Column
+    private MessageType messageType;
 
     public Appointment() {
 
+    }
+
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(MessageType messageType) {
+        this.messageType = messageType;
+    }
+
+    public Boolean getConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(Boolean confirmed) {
+        this.confirmed = confirmed;
     }
 
     public Location getLocation() {
@@ -28,14 +49,6 @@ public class Appointment extends BaseEntity {
         this.location = location;
     }
 
-    public LocalTime getAppointmentTime() {
-        return appointmentTime;
-    }
-
-    public void setAppointmentTime(LocalTime appointmentTime) {
-        this.appointmentTime = appointmentTime;
-    }
-
     public LocalDate getAppoinmentDate() {
         return appoinmentDate;
     }
@@ -43,4 +56,22 @@ public class Appointment extends BaseEntity {
     public void setAppoinmentDate(LocalDate appoinmentDate) {
         this.appoinmentDate = appoinmentDate;
     }
+
+    public Donor getDonor() {
+        return donor;
+    }
+
+    public void setDonor(Donor donor) {
+        this.donor = donor;
+    }
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+
+
 }

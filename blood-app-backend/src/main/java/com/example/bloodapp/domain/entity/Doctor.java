@@ -1,12 +1,10 @@
 package com.example.bloodapp.domain.entity;
 
 import com.example.bloodapp.controllers.dtos.DoctorResponse;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "doctors")
 public class Doctor extends User {
     @Column
     private String name;
@@ -16,6 +14,9 @@ public class Doctor extends User {
     private String cnp;
     @Column
     private String county;
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location locationDoctor;
 
     public Doctor() {
 
@@ -29,7 +30,17 @@ public class Doctor extends User {
         this.surname = surname;
         this.cnp = cnp;
         this.county = county;
+    }
 
+    public Doctor(String email, String password, String name, String surname, String cnp, String county, Location location) {
+        setEmail(email);
+        setPassword(password);
+        setRole(Role.DOCTOR);
+        this.name = name;
+        this.surname = surname;
+        this.cnp = cnp;
+        this.county = county;
+        this.locationDoctor = location;
     }
 
     public Doctor(DoctorResponse doctorResponse) {
@@ -40,6 +51,15 @@ public class Doctor extends User {
         this.surname = doctorResponse.getSurname();
         this.cnp = doctorResponse.getCnp();
         this.county = doctorResponse.getCounty();
+        this.locationDoctor = doctorResponse.getLocation();
+    }
+
+    public Location getLocationDoctor() {
+        return locationDoctor;
+    }
+
+    public void setLocationDoctor(Location location) {
+        this.locationDoctor = location;
     }
 
     public String getName() {

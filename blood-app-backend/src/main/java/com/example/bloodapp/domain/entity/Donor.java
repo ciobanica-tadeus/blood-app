@@ -1,12 +1,12 @@
 package com.example.bloodapp.domain.entity;
 
 import com.example.bloodapp.controllers.dtos.DonorResponse;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "donors")
 public class Donor extends User {
     @Column
     private String name;
